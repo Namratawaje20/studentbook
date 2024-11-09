@@ -15,5 +15,45 @@
             <button class="remove-input-btn" onclick="clearInput()">Clear</button>
         </div>
     </div>
+    <script>
+        // Array to hold student names
+        let students = [];
+    
+        // Function to render the student list
+        function renderStudentList() {
+            const studentList = document.getElementById('studentList');
+            studentList.innerHTML = ''; // Clear existing list
+    
+            students.forEach((student, index) => {
+                const li = document.createElement('li');
+                li.className = 'student-item';
+                li.innerHTML = `
+                    <span class="name">${index + 1}. ${student}</span>
+                `;
+                studentList.appendChild(li);
+            });
+        }
+    
+        // Function to add a student to the list
+        function addStudent() {
+            const studentInput = document.getElementById('studentInput');
+            const studentName = studentInput.value.trim();
+    
+            if (studentName !== '') {
+                students.push(studentName);
+                studentInput.value = ''; // Clear the input field
+                renderStudentList();
+            } else {
+                alert('Please enter a student name');
+            }
+        }
+    
+        // Function to clear the input field
+        function clearInput() {
+            const studentInput = document.getElementById('studentInput');
+            studentInput.value = ''; // Clear the input field
+        }
+    </script>
+    
 </body>
 </html>
