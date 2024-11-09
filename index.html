@@ -5,56 +5,193 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudentBook</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h1>StudentBook 📒</h1>
-        <ul id="studentList" class="student-list"></ul>
-        <div class="input-container">
-            <input type="text" id="studentInput" placeholder="Enter student name">
-            <button class="add-btn" onclick="addStudent()">Add</button>
-            <button class="remove-input-btn" onclick="clearInput()">Clear</button>
-        </div>
-    </div>
-    <script>
-        // Array to hold student names
-        let students = [];
-    
-        // Function to render the student list
-        function renderStudentList() {
-            const studentList = document.getElementById('studentList');
-            studentList.innerHTML = ''; // Clear existing list
-    
-            students.forEach((student, index) => {
-                const li = document.createElement('li');
-                li.className = 'student-item';
-                li.innerHTML = `
-                    <span class="name">${index + 1}. ${student}</span>
-                `;
-                studentList.appendChild(li);
-            });
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-    
-        // Function to add a student to the list
-        function addStudent() {
-            const studentInput = document.getElementById('studentInput');
-            const studentName = studentInput.value.trim();
-    
-            if (studentName !== '') {
-                students.push(studentName);
-                studentInput.value = ''; // Clear the input field
-                renderStudentList();
-            } else {
-                alert('Please enter a student name');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background-color: #fff;
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .student-list {
+            list-style-type: none;
+            margin-bottom: 30px;
+            padding: 0;
+            overflow-y: auto;
+            max-height: 300px;
+            text-align: left;
+        }
+
+        .student-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f8f8f8;
+            padding: 12px 20px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #555;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .student-item .name {
+            font-size: 18px;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .input-container input {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-container input:focus {
+            border-color: #4CAF50;
+        }
+
+        .input-container button {
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .add-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .add-btn:hover {
+            background-color: #45a049;
+        }
+
+        .remove-input-btn {
+            background-color: #ff4d4f;
+            color: white;
+        }
+
+        .remove-input-btn:hover {
+            background-color: #e33d3f;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .input-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .input-container input, .input-container button {
+                width: 100%;
             }
         }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>StudentBook 📒</h1>
+    <ul id="studentList" class="student-list"></ul>
+    <div class="input-container">
+        <input type="text" id="studentInput" placeholder="Enter student name">
+        <button class="add-btn" onclick="addStudent()">Add</button>
+        <button class="remove-input-btn" onclick="clearInput()">Clear</button>
+    </div>
+</div>
+
+<script>
     
-        // Function to clear the input field
-        function clearInput() {
-            const studentInput = document.getElementById('studentInput');
-            studentInput.value = ''; // Clear the input field
+    let students = [];
+
+    
+    function renderStudentList() {
+        const studentList = document.getElementById('studentList');
+        studentList.innerHTML = ''; 
+
+        students.forEach((student, index) => {
+            const li = document.createElement('li');
+            li.className = 'student-item';
+            li.innerHTML = `
+                <span class="name">${index + 1}. ${student}</span>
+            `;
+            studentList.appendChild(li);
+        });
+    }
+
+
+    function addStudent() {
+        const studentInput = document.getElementById('studentInput');
+        const studentName = studentInput.value.trim();
+
+        if (studentName !== '') {
+            students.push(studentName);
+            renderStudentList();
+        } else {
+            alert('Please enter a student name');
         }
-    </script>
-    
+    }
+
+
+    function clearInput() {
+        const studentInput = document.getElementById('studentInput');
+        studentInput.value = ''; 
+        students = []; 
+        renderStudentList();
+    }
+</script>
+
 </body>
 </html>
