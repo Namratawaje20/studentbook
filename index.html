@@ -6,7 +6,6 @@
     <title>StudentBook</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        
         * {
             margin: 0;
             padding: 0;
@@ -153,10 +152,8 @@
 </div>
 
 <script>
-    
     let students = [];
 
-    
     function renderStudentList() {
         const studentList = document.getElementById('studentList');
         studentList.innerHTML = ''; 
@@ -164,13 +161,10 @@
         students.forEach((student, index) => {
             const li = document.createElement('li');
             li.className = 'student-item';
-            li.innerHTML = `
-                <span class="name">${index + 1}. ${student}</span>
-            `;
+            li.innerHTML = `<span class="name">${index + 1}. ${student}</span>`;
             studentList.appendChild(li);
         });
     }
-
 
     function addStudent() {
         const studentInput = document.getElementById('studentInput');
@@ -179,11 +173,11 @@
         if (studentName !== '') {
             students.push(studentName);
             renderStudentList();
+            studentInput.value = ''; // Clear the input field after adding the name
         } else {
             alert('Please enter a student name');
         }
     }
-
 
     function clearInput() {
         const studentInput = document.getElementById('studentInput');
