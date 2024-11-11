@@ -3,189 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudentBook</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <title>Students Record</title>
+    <link rel="icon" href="record.png" type="image/png">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f7fc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-
-        .container {
-            background-color: #fff;
-            width: 100%;
-            max-width: 500px;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        .student-list {
-            list-style-type: none;
-            margin-bottom: 30px;
+            margin: 0;
             padding: 0;
-            overflow-y: auto;
-            max-height: 300px;
-            text-align: left;
+            background-color: #f0f8ff;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
         }
 
-        .student-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #f8f8f8;
-            padding: 12px 20px;
-            margin-bottom: 12px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            color: #555;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .student-item .name {
+        .studentdiv {
+            background-color: #e0f7fa;
+            border: 2px solid #00897b;
+            border-radius: 12px;
+            margin: 20px auto;
+            padding: 15px;
+            width: 60%;
             font-size: 18px;
+            color: #004d40;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .students-entry {
+            text-align: center;
+            font-size: 40px;
+            font-family: 'Poppins', sans-serif;
+            color: #00796b;
+            margin-top: 30px;
+            text-shadow: 1px 1px 2px #004d40;
         }
 
         .input-container {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            gap: 15px;
             justify-content: center;
             align-items: center;
-            margin-top: 20px;
         }
 
-        .input-container input {
-            flex: 1;
-            padding: 12px;
-            font-size: 16px;
+        #input {
+            padding: 10px;
+            border: 2px solid #00897b;
             border-radius: 8px;
-            border: 1px solid #ddd;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .input-container input:focus {
-            border-color: #4CAF50;
-        }
-
-        .input-container button {
-            padding: 12px 20px;
+            width: 300px;
+            text-align: center;
             font-size: 16px;
-            font-weight: 500;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .btn-1, .btn-2 {
+            padding: 10px 15px;
+            margin: 0 10px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+            background-color: #00796b;
+            color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
-            outline: none;
+            transition: background-color 0.3s;
         }
 
-        .add-btn {
-            background-color: #4CAF50;
-            color: white;
+        .btn-1:hover {
+            background-color: #004d40;
         }
 
-        .add-btn:hover {
-            background-color: #45a049;
+        .btn-2 {
+            background-color: #004d40;
         }
 
-        .remove-input-btn {
-            background-color: #ff4d4f;
-            color: white;
-        }
-
-        .remove-input-btn:hover {
-            background-color: #e33d3f;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-                max-width: 100%;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .input-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .input-container input, .input-container button {
-                width: 100%;
-            }
+        .btn-2:hover {
+            background-color: #00251a;
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>StudentBook 📒</h1>
-    <ul id="studentList" class="student-list"></ul>
+    <h1 class="students-entry">Students Record 📚✨</h1>
+    <div id="students-entry"></div>
     <div class="input-container">
-        <input type="text" id="studentInput" placeholder="Enter student name">
-        <button class="add-btn" onclick="addStudent()">Add</button>
-        <button class="remove-input-btn" onclick="clearInput()">Clear</button>
+        <input type="text" placeholder="Enter your name" id="input">
+        <button class="btn-1" onclick="add()">Add</button>
+        <button class="btn-2" onclick="remove()">Remove</button>
     </div>
-</div>
 
-<script>
-    let students = [];
+    <script>
+        const students = [];
 
-    function renderStudentList() {
-        const studentList = document.getElementById('studentList');
-        studentList.innerHTML = ''; 
-
-        students.forEach((student, index) => {
-            const li = document.createElement('li');
-            li.className = 'student-item';
-            li.innerHTML = `<span class="name">${index + 1}. ${student}</span>`;
-            studentList.appendChild(li);
-        });
-    }
-
-    function addStudent() {
-        const studentInput = document.getElementById('studentInput');
-        const studentName = studentInput.value.trim();
-
-        if (studentName !== '') {
-            students.push(studentName);
-            renderStudentList();
-            studentInput.value = ''; // Clear the input field after adding the name
-        } else {
-            alert('Please enter a student name');
+        function loadstudents() {
+            const studentsEntry = document.getElementById('students-entry');
+            studentsEntry.innerHTML = "";
+            students.forEach((student, index) => {
+                const studentDiv = document.createElement('div');
+                studentDiv.className = 'studentdiv';
+                studentDiv.innerHTML = `${index + 1}. ${student}`;
+                studentsEntry.appendChild(studentDiv);
+            });
         }
-    }
 
-    function clearInput() {
-        const studentInput = document.getElementById('studentInput');
-        studentInput.value = ''; 
-        students = []; 
-        renderStudentList();
-    }
-</script>
+        function add() {
+            const studentInput = document.getElementById('input');
+            if (studentInput.value) {
+                students.push(studentInput.value);
+                studentInput.value = "";
+                loadstudents();
+            }
+        }
 
+        function remove() {
+            const studentInput = document.getElementById('input');
+            const studentIndex = students.indexOf(studentInput.value);
+            if (studentIndex !== -1) {
+                students.splice(studentIndex, 1);
+                studentInput.value = "";
+                loadstudents();
+            } else {
+                alert('Student name not found');
+            }
+        }
+    </script>
 </body>
 </html>
